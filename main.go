@@ -1,7 +1,9 @@
 package main
 
 import (
+	"flag"
 	"log"
+
 	// "errors" // Uncomment if using CustomErrorHandler example
 
 	"github.com/gofiber/contrib/websocket"
@@ -70,9 +72,10 @@ func main() {
 		return c.JSON(activeRooms)
 	})
 
-	port := "8080"
-	log.Printf("Server Go Fiber WebRTC berjalan di port %s", port)
-	if err := app.Listen(":" + port); err != nil {
+	port := flag.String("port", "8080", "Port untuk server")
+	flag.Parse()
+	log.Printf("Server Go Fiber WebRTC berjalan di port %s", *port)
+	if err := app.Listen(":" + *port); err != nil {
 		log.Fatalf("Gagal menjalankan server: %v", err)
 	}
 }
